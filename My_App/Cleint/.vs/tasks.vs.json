@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskName": "task-app",
+      "appliesTo": "src/app/",
+      "type": "launch"
+    },
+    {
+      "taskName": "task-New Folder",
+      "appliesTo": "src/app/New Folder/",
+      "type": "launch"
+    }
+  ]
+}
