@@ -26,11 +26,9 @@ changememberphoto(photoUrl : string){
   login(model: any) {
     return this.http.post(this.baseurl + 'login', model)
       .pipe(
-         
-        map(( Response: any) => {
-      
+        map((Response: any) => {
               const user = Response;
-          if (user) {
+              if (user) {
             localStorage.setItem('token', user.token);
             localStorage.setItem('user', JSON.stringify(user.user));
             this.decoodedToken = this.jwthelper.decodeToken(user.token);

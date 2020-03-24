@@ -101,9 +101,10 @@ namespace My_App
             }
 
             //app.UseHttpsRedirection();
-            
+            app.UseCors(X => X.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders());
             app.UseAuthentication();
 
-            app.UseMvc();        }
+            app.UseMvc();
+        }
     }
 }

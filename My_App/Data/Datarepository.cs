@@ -38,8 +38,32 @@ namespace My_App.Data
 
         public async Task<PageList<User>> GetUsers( UserParams userParams)
         {
-            var users = _Context.Users.Include(x => x.Photos);
+            var users = _Context.Users.Include(x => x.Photos)
+                .OrderByDescending(x=>x.LastActive).AsQueryable();
 
+            users = users.Where(x => x.Id != userParams.UserId);
+
+            users = users.Where(x => x.Gender == userParams.Gender);
+
+            if (userParams.MinAge!=18||userParams.MaxAge!=99)
+            {
+                var mindb = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+                var maxdb = DateTime.Today.AddYears(-userParams.MinAge);
+
+                users = users.Where(X => X.DateOfBirth >= mindb && X.DateOfBirth <= maxdb);
+            }
+
+            if (!string.IsNullOrEmpty(userParams.OrderBy))
+            {
+                switch (userParams.OrderBy)
+                {
+                    case "created":users = users.OrderByDescending(x => x.Created);
+                        break;
+                    default:
+                        users = users.OrderByDescending(X => X.LastActive);
+                        break;
+                }
+            }
             return await PageList<User>.CreateAsync(users, userParams.PageNumber, userParams.Pagesize);
         }
 

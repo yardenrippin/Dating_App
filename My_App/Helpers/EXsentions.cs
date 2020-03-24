@@ -16,7 +16,7 @@ namespace My_App.Helpers
         public static void AddApplicationError(this HttpResponse response,string message)
         {
             response.Headers.Add("Application-Error", message);
-            response.Headers.Add("Access-Control-Expose-Headersr", "Application-Error");
+            response.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
             response.Headers.Add("Access-Control-Aiiow-Origin", "*");
         }
 
@@ -27,8 +27,9 @@ namespace My_App.Helpers
             var camelcaseformater = new JsonSerializerSettings();
             camelcaseformater.ContractResolver = new CamelCasePropertyNamesContractResolver();
             response.Headers.Add("pagination", JsonConvert.SerializeObject(paginationHeader, camelcaseformater));
-            response.Headers.Add("Access-Control-Expose-Headersr", "pagination");
+            response.Headers.Add("Access-Control-Expose-Headers", "pagination");
         }
+        
 
         public static int calculatage(this DateTime dateTime)
         {

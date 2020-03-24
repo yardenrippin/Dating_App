@@ -16,5 +16,15 @@ namespace My_App.Helpers
             get { return pagesize ; }
             set { pagesize = (value> MaxSize)? MaxSize: value; }
         }
+
+        public int UserId { get; set; }
+
+        public string Gender { get; set; }
+
+        public int MinAge { get; set; }
+
+        public int MaxAge { get; set; }
+
+        public string OrderBy { get; set; }
     }
 }
