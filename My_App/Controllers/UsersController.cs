@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using My_App.Data;
 using My_App.Dtos;
 using My_App.Helpers;
+using My_App.Modles;
 
 namespace My_App.Controllers
 {
@@ -54,7 +55,7 @@ namespace My_App.Controllers
                 }
 
             }
-           
+        
 
          
 
@@ -93,6 +94,33 @@ namespace My_App.Controllers
                 return NoContent();
 
             throw new Exception("update user" + id + "failed on save");
+        }
+
+        [HttpPost("{id}/like/{recipientId}")]
+        public async Task <IActionResult>LikeUser(int id ,int recipientId)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var Like = await _repo.GetLikes(id, recipientId);
+
+            if (Like != null)
+                return BadRequest("you alraedy like this user");
+
+            if (await _repo.GetUser(recipientId) == null)
+                return NotFound();
+
+            Like = new Likes
+            {
+                LikerId = id,
+                LikeeId = recipientId
+            };
+            _repo.Add<Likes>(Like);
+            if (await _repo.Saveall())
+                return Ok();
+
+            return BadRequest("failed to like user");
+
         }
     }
 }

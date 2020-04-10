@@ -9,7 +9,8 @@ import { AthuService } from '../_servise/auth.service';
 
 @Injectable()
 export class MemberEditresolver implements Resolve<User> {
-    constructor(private authservice: AthuService, private uerserver: UserService,private router:Router, private alertify: AlertifyService){}
+    // tslint:disable-next-line: max-line-length
+    constructor(private authservice: AthuService, private uerserver: UserService, private router: Router, private alertify: AlertifyService){}
 
 resolve(route: ActivatedRouteSnapshot): Observable<User>{
     return this.uerserver.getuser(this.authservice.decoodedToken.nameid).pipe(

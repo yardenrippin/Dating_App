@@ -22,6 +22,7 @@ this.authService.currentPhotoUrl.subscribe(photoutl => this.photoutl = photoutl)
     this.authService.login(this.model).subscribe(next => {
       
       this.alertify.success('login successfully');
+      this.router.navigate(['\members']);
       
       
     }, error => {

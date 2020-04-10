@@ -16,5 +16,6 @@ namespace My_App.Data
         Task<User> GetUser(int id);
         Task<photo> GetPhoto(int id);
         Task<photo> GetmainPhotoOfUser(int userId);
+        Task<Likes> GetLikes(int userid, int recipientid);
     }
 }
