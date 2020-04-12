@@ -17,10 +17,11 @@ namespace My_App.Data
        public DbSet<User> Users { get; set; }
        public DbSet<photo> photos { get; set; }
        public DbSet<Likes> Likes { get; set; }
+       public DbSet<Message> Messages { get; set; }
 
 
 
-        protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Likes>()
                 .HasKey(X => new {X.LikerId,X.LikeeId });
@@ -37,7 +38,19 @@ namespace My_App.Data
                 .HasForeignKey(x => x.LikerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Message>()
+                .HasOne(X => X.Sender)
+                .WithMany(M => M.MessagesSent)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Message>()
+                .HasOne(X => X.Recipient)
+                .WithMany(M => M.MessagesRecived)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
+
+
   
     }
 }

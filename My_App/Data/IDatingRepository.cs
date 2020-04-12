@@ -17,5 +17,9 @@ namespace My_App.Data
         Task<photo> GetPhoto(int id);
         Task<photo> GetmainPhotoOfUser(int userId);
         Task<Likes> GetLikes(int userid, int recipientid);
+        Task<Message> GetMessage(int id);
+        Task<PageList<Message>> GetMessagesForUser(MessageParams messageParams);
+        Task<IEnumerable<Message>> GetMessangerThread(int userId, int recipientId);
+
     }
 }

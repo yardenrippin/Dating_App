@@ -24,6 +24,9 @@ namespace My_App.Modles
         public ICollection<photo> Photos { get; set; }
         public ICollection<Likes> Likers { get; set; }
         public ICollection<Likes> Likees { get; set; }
+        public ICollection<Message> MessagesSent { get; set; }
+        public ICollection<Message> MessagesRecived { get; set; }
+
 
     }
 }

@@ -31,6 +31,13 @@ namespace My_App.Helpers
 
             CreateMap<UserForRegisterDto, User>();
 
+            CreateMap<MessageForCreationDto,Message>().ReverseMap();
+
+            CreateMap<Message, MessageToReturnDto>()
+                .ForMember(M => M.SenderPhotoUrl, opt => opt.MapFrom(u => u.Sender.Photos.FirstOrDefault(P => P.Ismain).Url))
+                
+                .ForMember(M => M.RecipientPhotoUrl, opt => opt.MapFrom(u => u.Recipient.Photos.FirstOrDefault(P => P.Ismain).Url));
+
         }
     }
 }

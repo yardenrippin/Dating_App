@@ -9,6 +9,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190923153158_ExtendedUserclass.cs" />
     <Compile Remove="Migrations\20190923153158_ExtendedUserclass.Designer.cs" />
+    <Compile Remove="Migrations\20200410153620_Messages.cs" />
+    <Compile Remove="Migrations\20200410153620_Messages.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
