@@ -144,13 +144,13 @@ namespace My_App.Data
             switch (messageParams.MessageContainer)
             {
                 case "Inbox":
-                    messages = messages.Where(U => U.RecipientId == messageParams.UserId);
+                    messages = messages.Where(U => U.RecipientId == messageParams.UserId && U.RecipientDeleted == false);
                     break;
                 case "Outbox":
-                    messages = messages.Where(U => U.SenderId == messageParams.UserId);
+                    messages = messages.Where(U => U.SenderId == messageParams.UserId && U.SenderDeleted== false);
                     break;
                 default:
-                    messages = messages.Where(U => U.RecipientId == messageParams.UserId && U.IsRead == false);
+                    messages = messages.Where(U => U.RecipientId == messageParams.UserId && U.IsRead == false && U.RecipientDeleted == false);
                     break;
 
             }
@@ -165,9 +165,9 @@ namespace My_App.Data
             var messages = await _Context.Messages
                 .Include(u => u.Sender).ThenInclude(P => P.Photos)
                 .Include(U => U.Recipient).ThenInclude(U => U.Photos)
-                .Where(m => m.RecipientId == userId && m.SenderId == recipientId
-                || m.RecipientId == recipientId && m.SenderId == userId)
-                .OrderByDescending(M => M.MessageSent).ToListAsync();
+                .Where(m => m.RecipientId == userId && m.RecipientDeleted == false && m.SenderId == recipientId
+                || m.RecipientId == recipientId && m.SenderDeleted == false &&  m.SenderId == userId)
+                .OrderBy(M => M.MessageSent).ToListAsync();
             return messages;
         }
     }

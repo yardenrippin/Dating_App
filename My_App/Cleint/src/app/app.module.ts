@@ -32,12 +32,15 @@ import { PhotoEdittorComponent } from './Members/photo-edittor/photo-edittor.com
 import { FileUploadModule } from 'ng2-file-upload';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { Listlistresolver } from './_resolver/list.resolver';
+import { Messagesresolver } from './_resolver/message.resolver';
+import { MemberMessagesComponent } from './Members/member-messages/member-messages.component';
+
 
 export function tokenGetter() {
    return localStorage.getItem('token');
 }
 export class CustomHammerConfig extends HammerGestureConfig {
-   overrides ={
+   overrides = {
       pinch: {enable: false},
       rotate: {enable: false}
    };
@@ -55,6 +58,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEdittorComponent,
+      MemberMessagesComponent,
       TimeAgoPipe
    ],
    imports: [
@@ -90,6 +94,7 @@ FileUploadModule,
       MemberDetailresolver,
       Memberlistresolver,
       MemberEditresolver,
+      Messagesresolver,
       Listlistresolver,
       PreventUnsavedChanges,
       { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig}

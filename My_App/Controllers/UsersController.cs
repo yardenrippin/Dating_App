@@ -64,7 +64,7 @@ namespace My_App.Controllers
             var userToretuern = _Mapper.Map<IEnumerable<UserForDetailDto>>(users);
 
             Response.AddPagination(users.CurrentPage, users.PageSize, users.TotlaCount, users.TotalPages);
-
+         
 
             return Ok(userToretuern);
         }

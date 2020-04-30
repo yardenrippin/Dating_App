@@ -1,0 +1,57 @@
+<div class="card" >
+  <div class="card-body">
+    <div *ngIf="messages?.length===0">
+      <h4>No message yet... say hi <p style="color:darkblue;" >using the message box below</p></h4>
+    </div>
+<ul class="chat">
+<li *ngFor="let message of messages">
+<!--to them-->
+<div *ngIf="message.senderId==recipientid">
+<span class="chat-img float-left" >
+  <img src="{{message.senderPhotoUrl}}" alt="{{message.senderKnownAs}}" class="rounded-circle">
+</span>
+<div class="chat-body">
+<div class="header">
+  <strong class="primary-font">{{message.recipientKnownAs}}</strong>
+<small class="text-nuted flot right" >
+  <span class="fa fa-clock-0" >{{message.messageSent | timeAgo}}</span>
+</small>
+</div>
+<p>{{message.content}}</p>
+</div>
+</div>
+
+<!--to me-->
+<div *ngIf="message.senderId!=recipientid">
+  <span class="chat-img float-right" >
+    <img src="{{message.senderPhotoUrl}}" alt="{{message.senderKnownAs}}" class="rounded-circle">
+  </span>
+  <div class="chat-body">
+  <div class="header">
+    <small class="text-nuted" >
+      <span class="fa fa-clock-0" >{{message.messageSent | timeAgo}}</span>
+      <span *ngIf="!message.isRead" class="text-danger" >Unread</span>
+      <span *ngIf="message.isRead" class="text-sccess" >(Read {{message.dateRade | timeAgo}})</span>
+    </small>
+    <strong class="primary-font float-right">{{message.senderKnownAs}}</strong>
+  </div>
+  <p>{{message.content}}</p>
+  </div>
+  </div>
+</li>
+</ul>
+
+  </div>
+  <div class="card-footer" >
+    <form #messageFrom="ngForm"(submit)="messageFrom.valid && sendMessage()">
+<div class="input-group" >
+  <input name='newMessage' style="width: 90%;" type="text"
+  [(ngModel)]="newMessage.content" required
+   class="from-control input-sm" placeholder="send a private messag">
+<div class="input-group-append" >
+  <button class="btn btn-primary" [disabled]='!messageFrom.valid'>Send</button>
+</div>
+</div>
+    </form>
+  </div>
+</div>

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/User';
 import { PaginatedResult } from '../_models/pagination';
 import { map } from 'rxjs/operators';
+import { Message } from '../_models/Message';
+
 
 
 
@@ -71,7 +73,48 @@ setmainphoto(userId: number, id: number) {
 deletephoto(userId: number, id: number ) {
   return this.http.delete(this.baseUrl + 'users/' + userId + '/photos/' + id );
 }
-sendlike(id: number, recipientId: number ){
-  return this.http.post(this.baseUrl + 'users/'+ id +'/like/'+ recipientId,{});
+sendlike(id: number, recipientId: number ) {
+  return this.http.post(this.baseUrl + 'users/' + id + '/like/' + recipientId, {});
+}
+
+getMessaged(id: number, page?, itemPerPage?, messagecontainer?) {
+
+const paginatedResult: PaginatedResult<Message []> = new  PaginatedResult<Message[]>();
+let params = new HttpParams();
+
+params = params.append('MessageContainer', messagecontainer);
+
+if ( page != null && itemPerPage != null) {
+  params = params.append('pageNumber', page);
+  params = params.append('pageSize', itemPerPage);
+  }
+return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/Messages', {observe: 'response', params})
+.pipe(
+  map(response => {
+paginatedResult.result = response.body;
+if (response.headers.get('pagination') !== null ) {
+paginatedResult.pagination = JSON.parse(response.headers.get('pagination'));
+}
+return paginatedResult;
+  })
+);
+
+}
+
+getMessageTread(userid: number, recipientid: number): Observable<Message[]> {
+return this.http.get<Message[]>(this.baseUrl + 'users/' + userid + '/Messages/thread/' + recipientid);
+}
+
+sendmessage(userid: number , message: Message) {
+  return this.http.post(this.baseUrl + 'users/' + userid + '/messages', message)
+}
+deletemassage(messageid: number, userid: number) {
+
+   return this.http.post(this.baseUrl + 'users/' + userid + '/messages/' + messageid, {} );
+}
+MarkAsRead(userid: number, messageid: number) {
+
+  this.http.post(this.baseUrl + 'users/' + userid + '/Messages/' + messageid + '/read' , {} )
+  .subscribe();
 }
 }
